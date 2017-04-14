@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Players";
+}
+
+<div class="row">
+    <table class="table" id="tblPlayers">
+        <thead>
+            <tr>
+                <th>@Html.DisplayName("Name")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Models.Player player in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(player.Name, "ForceList", new { id = player.PlayerID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

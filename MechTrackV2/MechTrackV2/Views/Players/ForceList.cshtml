@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Models.Force>
+
+@{
+    ViewBag.Title = "ForceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ForceList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", "Force")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ForceType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParentForceID)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Details", "Forces", new { id = item.ForceID }, null)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ForceType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParentForceID)
+        </td>
+    </tr>
+}
+
+</table>

@@ -197,7 +197,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Controllers\ForcesController.cs" />
+    <Compile Include="Controllers\MachinesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -269,6 +271,14 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\Players\ForceList.cshtml" />
     <Content Include="Views\Forces\Details.cshtml" />
+    <Content Include="Views\Players\Create.cshtml" />
+    <Content Include="Views\Forces\Create.cshtml" />
+    <Content Include="Views\Forces\Index.cshtml" />
+    <Content Include="Views\Machines\Index.cshtml" />
+    <Content Include="Views\Characters\Index.cshtml" />
+    <Content Include="Views\Characters\Create.cshtml" />
+    <Content Include="Views\Machines\Create.cshtml" />
+    <Content Include="Views\Forces\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

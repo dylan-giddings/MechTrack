@@ -10,114 +10,116 @@ using Models;
 
 namespace MechTrackV2.Controllers
 {
-    public class ForcesController : Controller
+    public class MachinesController : Controller
     {
         private MechTrackContext db = new MechTrackContext();
 
-        // GET: Forces
+        // GET: Machines
         public ActionResult Index()
         {
-            var forces = db.Forces.Include(f => f.Player);
-            return View(forces.ToList());
+            var machines = db.Machines.Include(m => m.Character).Include(m => m.Force);
+            return View(machines.ToList());
         }
 
-        // GET: Forces/Details/5
+        // GET: Machines/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<Machine> forceMachines = db.Machines.Where(m => m.ForceID == id).ToList();
-            if (forceMachines == null)
+            Machine machine = db.Machines.Find(id);
+            if (machine == null)
             {
                 return HttpNotFound();
             }
-            return View(forceMachines);
+            return View(machine);
         }
 
-        // GET: Forces/Create
+        // GET: Machines/Create
         public ActionResult Create()
         {
-            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "Name");
-            ViewBag.ParentForces = new SelectList(db.Forces, "ForceID", "Name");
+            ViewBag.MachineID = new SelectList(db.Characters, "CharacterID", "Name");
+            ViewBag.ForceID = new SelectList(db.Forces, "ForceID", "Name");
             return View();
         }
 
-        // POST: Forces/Create
+        // POST: Machines/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ForceID,Name,ForceType,PlayerID,ParentForceID")] Force force)
+        public ActionResult Create([Bind(Include = "MachineID,Name,Type,Tonnage,CharacterID,ForceID")] Machine machine)
         {
             if (ModelState.IsValid)
             {
-                db.Forces.Add(force);
+                db.Machines.Add(machine);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "Name", force.PlayerID);
-            return View(force);
+            ViewBag.MachineID = new SelectList(db.Characters, "CharacterID", "Name", machine.MachineID);
+            ViewBag.ForceID = new SelectList(db.Forces, "ForceID", "Name", machine.ForceID);
+            return View(machine);
         }
 
-        // GET: Forces/Edit/5
+        // GET: Machines/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Force force = db.Forces.Find(id);
-            if (force == null)
+            Machine machine = db.Machines.Find(id);
+            if (machine == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "Name", force.PlayerID);
-            ViewBag.ParentForces = new SelectList(db.Forces, "ForceID", "Name");
-            return View(force);
+            ViewBag.MachineID = new SelectList(db.Characters, "CharacterID", "Name", machine.MachineID);
+            ViewBag.ForceID = new SelectList(db.Forces, "ForceID", "Name", machine.ForceID);
+            return View(machine);
         }
 
-        // POST: Forces/Edit/5
+        // POST: Machines/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ForceID,Name,ForceType,PlayerID,ParentForceID")] Force force)
+        public ActionResult Edit([Bind(Include = "MachineID,Name,Type,Tonnage,CharacterID,ForceID")] Machine machine)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(force).State = EntityState.Modified;
+                db.Entry(machine).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PlayerID = new SelectList(db.Players, "PlayerID", "Name", force.PlayerID);
-            return View(force);
+            ViewBag.MachineID = new SelectList(db.Characters, "CharacterID", "Name", machine.MachineID);
+            ViewBag.ForceID = new SelectList(db.Forces, "ForceID", "Name", machine.ForceID);
+            return View(machine);
         }
 
-        // GET: Forces/Delete/5
+        // GET: Machines/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Force force = db.Forces.Find(id);
-            if (force == null)
+            Machine machine = db.Machines.Find(id);
+            if (machine == null)
             {
                 return HttpNotFound();
             }
-            return View(force);
+            return View(machine);
         }
 
-        // POST: Forces/Delete/5
+        // POST: Machines/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Force force = db.Forces.Find(id);
-            db.Forces.Remove(force);
+            Machine machine = db.Machines.Find(id);
+            db.Machines.Remove(machine);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
